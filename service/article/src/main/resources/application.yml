@@ -13,3 +13,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+  logging:
+    level:
+      root: INFO
+      org.springframework.web: DEBUG
+      my.msa.board: DEBUG

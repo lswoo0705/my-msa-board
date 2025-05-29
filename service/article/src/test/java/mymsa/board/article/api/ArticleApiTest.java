@@ -2,6 +2,7 @@ package mymsa.board.article.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import mymsa.board.article.dto.response.ArticlePageResponse;
 import mymsa.board.article.dto.response.ArticleResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClient;
@@ -27,7 +28,7 @@ public class ArticleApiTest {
 
     @Test
     void getArticleTest() {
-        ArticleResponse response = getArticle(183097215375630336L);
+        ArticleResponse response = getArticle(183444693929723178L);
         System.out.println("response = " + response);
     }
 
@@ -36,6 +37,19 @@ public class ArticleApiTest {
                 .uri("/v1/articles/{articleId}", articleId)
                 .retrieve()
                 .body(ArticleResponse.class);
+    }
+
+    @Test
+    void getAllArticlesTest() {
+        ArticlePageResponse response = restClient.get()
+                .uri("/v1/articles?boardId=1&pageSize=30&page=50000")
+                .retrieve()
+                .body(ArticlePageResponse.class);
+
+        System.out.println("response.getArticleCount() = " + response.getArticleCount());
+        for (ArticleResponse article : response.getArticles()) {
+            System.out.println("articleId = " + article.getArticleId());
+        }
     }
 
     @Test
